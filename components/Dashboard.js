@@ -1,5 +1,6 @@
 import { Fugaz_One } from "next/font/google";
 import React from "react";
+import Calendar from "./Calendar";
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 // Dashboard Component
@@ -9,23 +10,25 @@ export default function Dashboard() {
     time_remaining: "14:12:12",
     date: new Date().toDateString(),
   };
+
+  // mood declaration
   const moods = {
-    crying: "😭",
+    Crying: "😭",
     Sad: "😥",
     Existing: "😶",
     Good: "😊",
     Elated: "😍",
   };
   return (
-    <div className="flex flex-1 flex-col gap-4 sm:gap-8 md:gap-12">
-      <div className="grid grid-col sm:grid-cols-3 bg-indigo-50 text-indigo-500 rounded-lg">
+    <div className="flex  flex-col flex-1 gap-8 sm:gap-12 md:gap-16">
+      <div className="grid grid-cols-3  bg-indigo-50 text-indigo-500 rounded-lg p-4 gap-4">
         {Object.keys(statues).map((status, statusIndex) => {
           return (
-            <div key={statusIndex} className="p-4 flex flex-col gap-1 sm:gap-2">
-              <p className="font-medium uppercase text-xs sm:text-sm">
+            <div key={statusIndex} className="flex flex-col gap-1 sm:gap-2">
+              <p className="font-medium uppercase text-xs sm:text-sm truncate">
                 {status.replaceAll("_", "")}
               </p>
-              <p className={`text-base sm:text-lg ${fugaz.className}`}>
+              <p className={`text-base sm:text-lg ${fugaz.className} truncate`}>
                 {statues[status]}
               </p>
             </div>
@@ -37,19 +40,25 @@ export default function Dashboard() {
       >
         How do you <span className="textGradient">feel</span> today?
       </h4>
-      <div className="grid grid-col-2 sm:grid-cols-5 gap-4">
+
+      <div className=" flex items-stretch flex-wrap gap-4">
         {Object.keys(moods).map((mood, moodIndex) => {
           return (
             <button
-              className={`${mood === 4 ? "col-span-2" : ""}${fugaz.className}`}
+              className={`p-4 px-5 rounded-2xl purpleShadow duration-200 bg-indigo-50 hover:bg-indigo-200 text-center items-center flex flex-col gap-2 flex-1 ${fugaz.className}`}
               key={moodIndex}
             >
-              <p>{mood}</p>
-              <p>{moods[moodIndex]}</p>
+              <p className="text-4xl sm:text-5xl md:text-6xl">{moods[mood]}</p>
+              <p
+                className={`text-indigo-500 text-xs sm:text-sm md:text-base ${fugaz.className}`}
+              >
+                {mood}
+              </p>
             </button>
           );
         })}
       </div>
+      <Calendar />
     </div>
   );
 }
