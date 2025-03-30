@@ -1,53 +1,59 @@
-import "./globals.css";
-// import Transition from "./../components/Transition";
 import { Fugaz_One, Open_Sans } from "next/font/google";
+import "./globals.css";
+import Link from "next/link";
+import { AuthProvider } from "@/context/AuthContext";
+import Head from "./head";
+import Logout from "@/components/Logout";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 const opensans = Open_Sans({ subsets: ["latin"] });
+const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 export const metadata = {
-  title: "Mood-Track ",
-  description: "Track your daily mood every day of the year",
+  title: "Mood-Track",
+  description: "Track your daily mood every day of the year!",
 };
 
 export default function RootLayout({ children }) {
   const header = (
     <header className="p-4 sm:p-8 flex items-center justify-between gap-4">
-      <h1 className={`text-base sm:text-lg ${fugaz.className} textGradient`}>
-        Mood-Track
-      </h1>
-      <div className=" flex items-center justify-between">
-        {" "}
-        PLACEHOLDER CTA || STAT
-      </div>
+      <Link href={"/"}>
+        <h1 className={"text-base sm:text-lg textGradient " + fugaz.className}>
+          Broodl
+        </h1>
+      </Link>
+      <Logout />
     </header>
   );
 
   const footer = (
     <footer className="p-4 sm:p-8 grid place-items-center">
-      <p className={`text-indigo-500 ${fugaz.className}`}> Created with❤️ </p>
+      <Link href={"https://youtu.be/lkjrUW8fI40"} target="_blank" className="">
+        <p
+          className={
+            "text-indigo-500 duration-200 hover:text-white hover:bg-indigo-500  " +
+            fugaz.className
+          }
+        >
+          Built by Eyiowuawi Timilleyin
+        </p>
+      </Link>
     </footer>
   );
 
   return (
     <html lang="en">
-      <body
-        // ${geistSans.variable} ${geistMono.variable} antialiased
-        className={` w-full max-w-[1000px] mx-auto text-sm sm:text-base min-h-screen flex-col text-slate-800 ${opensans.className}`}
-      >
-        {header}
-        {children}
-        {footer}
-      </body>
+      <Head />
+      <AuthProvider>
+        <body
+          className={
+            "w-full max-w-[1000px] mx-auto text-sm sm:text-base min-h-screen flex flex-col text-slate-800  " +
+            opensans.className
+          }
+        >
+          {children}
+          {footer}
+        </body>
+      </AuthProvider>
     </html>
   );
 }
